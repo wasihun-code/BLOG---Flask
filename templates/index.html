@@ -1,0 +1,27 @@
+{% extends 'layout.html' %}
+
+
+{% block title %}
+
+        <title> BLOG </title>
+
+{% endblock title %}
+
+
+
+
+
+
+
+{% block content %}
+
+    {% for post in posts %}
+        <div class="container">
+            <h2>  {{ post.author }} </h2>
+            <h1 class="text-center h1"> {{ post.title }} </h1>
+            <p class="lead"> {{ post.content }} </p>
+            <h6 class="text-end h6"> {{ post.date_posted }} </h6>
+        </div>
+    {% endfor %}
+
+{% endblock content %}
