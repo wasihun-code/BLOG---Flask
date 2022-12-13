@@ -1,11 +1,7 @@
-from flask import Flask, render_template, url_for, flash, redirect
-from forms import LoginForm, RegistrationForm
-from flask_sqlalchemy import SQLAlchemy
-
-app = Flask(__name__)
-
-app.config["SECRET_KEY"] = "e2f679bf0980230e224a745c"
-app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///site.db"
+from flaskblog import app
+from flask import render_template, url_for, flash, redirect
+from flaskblog.forms import RegistrationForm, LoginForm
+from flaskblog.models import User, Post
 
 posts = [
     {
@@ -48,7 +44,3 @@ def register():
 def login() -> str:
     form = LoginForm()
     return render_template("login.html", title="Login to BLOG", form=form)
-
-
-if __name__ == "__main__":
-    app.run(debug=True)
