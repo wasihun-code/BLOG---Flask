@@ -6,6 +6,7 @@ from wtforms import (
     PasswordField,
     SubmitField,
     BooleanField,
+    TextAreaField,
     ValidationError,
 )
 from flask_wtf.file import FileField, FileAllowed
@@ -83,3 +84,10 @@ class UpdateAccountForm(FlaskForm):
                 
                 # raise validation error
                 raise ValidationError("email already taken. Choose a different one")
+
+
+class NewPostForm(FlaskForm):
+    
+    title = StringField("Title", validators=[DataRequired()])
+    content = TextAreaField("Content", validators=[DataRequired()])
+    submit = SubmitField("Post")

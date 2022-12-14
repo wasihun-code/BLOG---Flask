@@ -2,8 +2,8 @@ import secrets, os
 from PIL import Image
 from flaskblog import app, db, bcrypt
 from flask import render_template, url_for, flash, redirect, request
-from flaskblog.forms import RegistrationForm, LoginForm, UpdateAccountForm
-from flaskblog.models import User
+from flaskblog.forms import RegistrationForm, LoginForm, UpdateAccountForm, NewPostForm
+from flaskblog.models import User, Post
 from flask_login import login_user, logout_user, login_required, current_user
 
 posts = [
@@ -25,6 +25,7 @@ posts = [
 @app.route("/")
 @app.route("/index")
 def index() -> str:
+    posts = Post.query.all()
     return render_template("index.html", posts=posts)
 
 
@@ -174,3 +175,26 @@ def account():
         
     image = url_for("static", filename="profile_pictures/" + current_user.image)
     return render_template("account.html", title="Account", image=image, form=form)
+
+
+@app.route("/posts/new", methods=['GET', 'POST'])
+def new_post():
+    
+    form = NewPostForm()
+    
+    if form.validate_on_submit():
+        
+        # Create post
+        post = Post(title=form.title.data, content=form.content.data, author=current_user)
+        
+        # Add the database and commit the changes
+        db.session.add(post)
+        db.session.commit()
+        
+        # Display success message
+        flash("Post created successefully!", category="success")    
+        
+        # And redirect user to home page
+        return redirect(url_for('index'))
+    
+    return render_template('create_post.html', title="New Post", form=form)
