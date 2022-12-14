@@ -3,7 +3,7 @@
 {% block title %}
 
     {% if title %}
-        <title>  BLOG - {{ title }}}} </title>
+        <title>  BLOG - {{ title }} </title>
 
     {% else %}
         <title> BLOG </title>
@@ -17,7 +17,7 @@
     <div class="content-section">
 
         <form action="" method='POST'>
-        
+            {{ form.hidden_tag() }}
             <fieldset class="form-group">
                 <legend> JOIN US TO START BLOGGING</legend>
                 <div class="form-group">                    
