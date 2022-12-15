@@ -54,20 +54,20 @@ class UpdateAccountForm(FlaskForm):
         "Username", validators=[DataRequired(), Length(min=2, max=20)]
     )
     email = EmailField("Email", validators=[DataRequired(), Email()])
-    picture = FileField("Update Picture", validators=[FileAllowed(['jpg', 'png'])])
+    picture = FileField("Update Picture", validators=[FileAllowed(["jpg", "png"])])
     submit = SubmitField("Update")
 
     def validate_username(field, username):
 
         # if the username they entered is not theirs
         if username.data != current_user.username:
-            
+
             # query the user
             user = User.query.filter_by(username=username.data).first()
 
             # if another user exists with the username
             if user:
-                
+
                 # raise valiadtion error
                 raise ValidationError("username already taken. Choose a different one")
 
@@ -75,19 +75,19 @@ class UpdateAccountForm(FlaskForm):
 
         # if the email they entered is not theirs
         if email.data != current_user.email:
-            
+
             # query the user
             user = User.query.filter_by(email=email.data).first()
 
             # if anotehr user exists with that email
             if user:
-                
+
                 # raise validation error
                 raise ValidationError("email already taken. Choose a different one")
 
 
 class NewPostForm(FlaskForm):
-    
+
     title = StringField("Title", validators=[DataRequired()])
     content = TextAreaField("Content", validators=[DataRequired()])
     submit = SubmitField("Post")
