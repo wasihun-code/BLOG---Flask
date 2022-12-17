@@ -1,8 +1,8 @@
 import secrets, os
 from PIL import Image
-from flask import url_for
+from flask import url_for, current_app
 from flask_mail import Message
-from flaskblog import app,  mail
+from flaskblog import mail
 
 def send_reset_email(user):
 
@@ -34,7 +34,7 @@ def save_picture(form_picture_data):
     picture_fn = random_file_name + file_extension
 
     # extract and store the picture path
-    picture_path = os.path.join(app.root_path, "static/profile_pictures/", picture_fn)
+    picture_path = os.path.join(current_app.root_path, "static/profile_pictures/", picture_fn)
 
     # Input a custom output size
     output_size = (125, 125)
