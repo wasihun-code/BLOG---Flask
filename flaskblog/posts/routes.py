@@ -31,15 +31,13 @@ def new_post():
         # And redirect post to home page
         return redirect(url_for("main.index"))
 
-    return render_template(
-        "create_post.html", title="New Post", form=form, legend="New Post"
-    )
+    return render_template("posts/create_post.html", title="New Post", form=form, legend="New Post")
 
 
 @posts.route("/posts/<int:post_id>")
 def post(post_id):
     post = Post.query.get_or_404(post_id)
-    return render_template("post.html", title=post.title, post=post)
+    return render_template("posts/post.html", title=post.title, post=post)
 
 
 @posts.route("/posts/<int:post_id>/update", methods=["GET", "POST"])
@@ -60,7 +58,7 @@ def update_post(post_id):
         form.title.data = post.title
         form.content.data = post.content
     return render_template(
-        "create_post.html", title="Update Post", form=form, legend="Update Post"
+        "posts/create_post.html", title="Update Post", form=form, legend="Update Post"
     )
 
 
@@ -85,4 +83,4 @@ def post_posts(postname):
         .order_by(Post.date_posted.desc())
         .paginate(page=page, per_page=2)
     )
-    return render_template("post_post.html", posts=posts, post=post)
+    return render_template("posts/post_post.html", posts=posts, post=post)

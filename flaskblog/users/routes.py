@@ -40,7 +40,7 @@ def register():
         return redirect(url_for("users.login"))
 
     # On get request, create a form object and render the template for users to register
-    return render_template("register.html", title="Register to get started", form=form)
+    return render_template("users/register.html", title="Register to get started", form=form)
 
 
 @users.route("/login", methods=["GET", "POST"])
@@ -81,7 +81,7 @@ def login() -> str:
         )
 
     # either in get request of failure to provide correct credential serve the template
-    return render_template("login.html", title="Login", form=form)
+    return render_template("users/login.html", title="Login", form=form)
 
 
 @users.route("/logout")
@@ -124,7 +124,7 @@ def account():
         form.email.data = current_user.email
 
     image = url_for("static", filename="profile_pictures/" + current_user.image)
-    return render_template("account.html", title="Account", image=image, form=form)
+    return render_template("users/account.html", title="Account", image=image, form=form)
 
 @users.route("/reset_password", methods=["GET", "POST"])
 def request_password():
@@ -143,7 +143,7 @@ def request_password():
         )
         return redirect(url_for("users.login"))
 
-    return render_template("request_password.html", title="Reset Password", form=form)
+    return render_template("users/request_password.html", title="Reset Password", form=form)
 
 
 @users.route("/reset_password/<string:token>", methods=["GET", "POST"])
@@ -170,7 +170,7 @@ def reset_password(token):
         )
         return redirect(url_for("users.login"))
 
-    return render_template("reset_password", title="Reset Password", form=form)
+    return render_template("users/reset_password", title="Reset Password", form=form)
 
 @users.route("/user/<string:username>")
 def user_posts(username):
@@ -179,4 +179,4 @@ def user_posts(username):
     posts = Post.query.filter_by(author=user)\
         .order_by(Post.date_posted.desc())\
         .paginate(page=page, per_page=5)
-    return render_template('user_posts.html', posts=posts, user=user)
+    return render_template('users/user_posts.html', posts=posts, user=user)

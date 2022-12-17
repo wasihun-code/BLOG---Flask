@@ -8,9 +8,9 @@ main = Blueprint('main', __name__)
 def index() -> str:
     page = request.args.get("page", 1, type=int)
     posts = Post.query.order_by(Post.date_posted.desc()).paginate(per_page=5, page=page)
-    return render_template("index.html", posts=posts)
+    return render_template("main/index.html", posts=posts)
 
 
 @main.route("/about")
 def about() -> str:
-    return render_template("about.html", title="About")
+    return render_template("main/about.html", title="About")
